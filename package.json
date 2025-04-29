@@ -3,10 +3,10 @@
   "publisher": "yusufdanis",
   "displayName": "Hidden Character Detector",
   "description": "Scans and detects potentially problematic hidden or invisible characters in your project.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "icons/hcd-logo.png",
   "engines": {
-    "vscode": "^1.99.0"
+    "vscode": "^1.96.0"
   },
   "categories": [
     "Linters"
@@ -19,7 +19,11 @@
     "zero-width",
     "scan",
     "detect",
-    "lint"
+    "lint",
+    "vibe coding",
+    "cursor",
+    "windsurf",
+    "ai"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -69,7 +73,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "20.x",
-    "@types/vscode": "^1.99.0",
+    "@types/vscode": "^1.96.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "@vscode/test-cli": "^0.0.10",
