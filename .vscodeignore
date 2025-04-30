@@ -6,14 +6,13 @@ src/**
 .gitignore
 .yarnrc
 esbuild.js
-vsc-extension-quickstart.md
 **/tsconfig.json
 **/eslint.config.mjs
 **/*.map
 **/*.ts
 **/.vscode-test.*
 .cursor/
-_project/
+_project/   
 _experimental/
 _test/
 

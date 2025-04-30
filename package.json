@@ -2,8 +2,8 @@
   "name": "hidden-character-detector",
   "publisher": "yusufdanis",
   "displayName": "Hidden Character Detector",
-  "description": "Scans and detects potentially problematic hidden or invisible characters in your project.",
-  "version": "0.0.2",
+  "description": "Detects problematic hidden characters often used in ASCII Smuggling attacks to prevent security vulnerabilities.",
+  "version": "0.0.3",
   "icon": "icons/hcd-logo.png",
   "engines": {
     "vscode": "^1.96.0"
@@ -20,6 +20,15 @@
     "scan",
     "detect",
     "lint",
+    "linter",
+    "security",
+    "vulnerability",
+    "ascii smuggling",
+    "obfuscation",
+    "bidirectional",
+    "bidi",
+    "control characters",
+    "binary encoding",
     "vibe coding",
     "cursor",
     "windsurf",
@@ -35,6 +44,11 @@
         "command": "hiddenCharacterDetector.scanActiveEditor",
         "title": "Hidden Character: Scan Active Editor",
         "category": "Hidden Character Detector"
+      },
+      {
+        "command": "hiddenCharacterDetector.scanWorkspace",
+        "title": "Hidden Character: Scan Entire Workspace",
+        "category": "Hidden Character Detector"
       }
     ],
     "configuration": {
@@ -43,7 +57,88 @@
         "hiddenCharacterDetector.scanOnSave": {
           "type": "boolean",
           "default": true,
-          "description": "Scan files for hidden characters when they are saved."
+          "description": "Automatically scan the active file for hidden characters every time it is saved. It is generally recommended to keep this enabled for immediate feedback. Disable this *only* if you experience significant performance issues on large files or have a specific workflow reason. Other triggers (like opening files, switching tabs, or manual scans) will still function."
+        },
+        "hiddenCharacterDetector.automaticWorkspaceScan.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable periodic background scanning of all files in the current workspace. This helps find hidden characters in files you may not have opened recently. Disable if you prefer to only scan open files or trigger workspace scans manually."
+        },
+        "hiddenCharacterDetector.automaticWorkspaceScan.intervalSeconds": {
+          "type": "number",
+          "default": 60,
+          "minimum": 10,
+          "description": "Set the frequency (in seconds) for the automatic background workspace scan. This setting is only used when 'automaticWorkspaceScan.enabled' is true. A longer interval uses fewer resources but provides less frequent updates. Minimum 10 seconds."
+        },
+        "hiddenCharacterDetector.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/.svn/**",
+            "**/.hg/**",
+            "**/CVS/**",
+            "**/.DS_Store/**",
+            "**/.venv/**",
+            "**/venv/**",
+            "**/env/**",
+            "**/*.lock",
+            "**/dist/**",
+            "**/out/**",
+            "**/*.woff",
+            "**/*.woff2",
+            "**/*.ttf",
+            "**/*.otf",
+            "**/*.eot",
+            "**/*.png",
+            "**/*.jpg",
+            "**/*.jpeg",
+            "**/*.gif",
+            "**/*.svg",
+            "**/*.ico",
+            "**/*.webp",
+            "**/*.mp4",
+            "**/*.mov",
+            "**/*.avi",
+            "**/*.webm",
+            "**/*.mkv",
+            "**/*.mp3",
+            "**/*.wav",
+            "**/*.ogg",
+            "**/*.flac",
+            "**/*.doc",
+            "**/*.docx",
+            "**/*.xls",
+            "**/*.xlsx",
+            "**/*.ppt",
+            "**/*.pptx",
+            "**/*.odt",
+            "**/*.ods",
+            "**/*.odp",
+            "**/*.pdf",
+            "**/*.rtf",
+            "**/*.zip",
+            "**/*.rar",
+            "**/*.7z",
+            "**/*.tar",
+            "**/*.gz",
+            "**/*.bz2",
+            "**/*.iso",
+            "**/*.dmg",
+            "**/*.exe",
+            "**/*.dll",
+            "**/*.so",
+            "**/*.dylib",
+            "**/*.app",
+            "**/*.db",
+            "**/*.sqlite",
+            "**/*.mdb",
+            "**/chromedriver"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of glob patterns specifying files and folders to exclude from scanning. Use standard glob syntax (e.g., '**/node_modules/**' to exclude all node_modules folders). Files and folders are excluded if their path, relative to the workspace root, matches any of these patterns."
         }
       }
     }
@@ -72,6 +167,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/micromatch": "^4.0.9",
     "@types/node": "20.x",
     "@types/vscode": "^1.96.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
@@ -84,5 +180,8 @@
     "npm-run-all": "^4.1.5",
     "ts-jest": "^29.3.2",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "micromatch": "^4.0.7"
   }
 }

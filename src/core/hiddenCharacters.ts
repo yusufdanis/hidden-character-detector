@@ -11,6 +11,7 @@ export const zeroWidthChars = new Set<string>([
     '\u200C', // Zero Width Non-Joiner
     '\u200D', // Zero Width Joiner
     '\uFEFF', // Zero Width No-Break Space (also BOM)
+    '\u180E', // Mongolian Vowel Separator
 ]);
 export const ZERO_WIDTH_CATEGORY = "Zero-Width";
 export const ZERO_WIDTH_MESSAGE = "Zero-width character; invisible but can affect text processing.";
@@ -36,6 +37,15 @@ export const bidiControlChars = new Set<string>([
 ]);
 export const BIDI_CONTROL_CATEGORY = "Bidirectional Control";
 export const BIDI_CONTROL_MESSAGE = "Bidirectional control character; can alter text display order, potentially obfuscating logic.";
+
+// Category: Invisible Formatting Characters
+// These characters affect layout (like line/paragraph breaks) but are typically invisible.
+export const invisibleFormattingChars = new Set<string>([
+    '\u2028', // Line Separator
+    '\u2029', // Paragraph Separator
+]);
+export const INVISIBLE_FORMATTING_CATEGORY = "Invisible Formatting";
+export const INVISIBLE_FORMATTING_MESSAGE = "Invisible formatting character; affects layout but isn't typically visible.";
 
 // Category: Deprecated Unicode Tag Characters
 // These were intended for language tagging but are deprecated and can be abused.
@@ -70,6 +80,7 @@ export const VARIATION_SELECTOR_MESSAGE = "Variation selector; while sometimes l
 export const allHiddenChars = new Map<string, { category: string; message: string }>([
     ...Array.from(zeroWidthChars).map(char => [char, { category: ZERO_WIDTH_CATEGORY, message: ZERO_WIDTH_MESSAGE }] as [string, { category: string; message: string }]),
     ...Array.from(bidiControlChars).map(char => [char, { category: BIDI_CONTROL_CATEGORY, message: BIDI_CONTROL_MESSAGE }] as [string, { category: string; message: string }]),
+    ...Array.from(invisibleFormattingChars).map(char => [char, { category: INVISIBLE_FORMATTING_CATEGORY, message: INVISIBLE_FORMATTING_MESSAGE }] as [string, { category: string; message: string }]),
     ...Array.from(deprecatedTagChars).map(char => [char, { category: DEPRECATED_TAG_CATEGORY, message: DEPRECATED_TAG_MESSAGE }] as [string, { category: string; message: string }]),
     ...Array.from(variationSelectors).map(char => [char, { category: VARIATION_SELECTOR_CATEGORY, message: VARIATION_SELECTOR_MESSAGE }] as [string, { category: string; message: string }]),
 ]);

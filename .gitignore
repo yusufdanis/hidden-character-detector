@@ -31,7 +31,6 @@ pids/
 !.env.template
 
 # IDE / Editor directories/files
-.vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
